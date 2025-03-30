@@ -1,18 +1,18 @@
 #include <stdio.h>
 
-#define QUEUE_SIZE 100
+#define MAX 100
 
-int queue[QUEUE_SIZE];
+int queue[MAX];
 int front = -1, rear = -1;
 
 void enqueue(int value) {
-    if ((rear + 1) % QUEUE_SIZE == front) {
+    if ((rear + 1) % MAX == front) {
         printf("Queue Overflow\n");
         return;
     }
     if (front == -1)
         front = 0;
-    rear = (rear + 1) % QUEUE_SIZE;
+    rear = (rear + 1) % MAX;
     queue[rear] = value;
 }
 
@@ -24,7 +24,7 @@ void dequeue() {
     if (front == rear) {
         front = rear = -1;
     } else {
-        front = (front + 1) % QUEUE_SIZE;
+        front = (front + 1) % MAX;
     }
 }
 
@@ -33,7 +33,7 @@ void display() {
         printf("Queue is empty\n");
         return;
     }
-    for (int i = front;; i = (i + 1) % QUEUE_SIZE) {
+    for (int i = front;; i = (i + 1) % MAX) {
         printf("%d\n", queue[i]);
         if (i == rear)
             break;
