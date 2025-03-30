@@ -1,67 +1,46 @@
 #include <stdio.h>
 
-#define MAX 10 // Maximum matrix size for simplicity
+#define MAX 10 // Maximum size of the matrix
 
-typedef struct {
-    int row, col, val;
-} Tuple;
+void readMatrix(int matrix[MAX][MAX], int *rows, int *cols) {
+    printf("Enter number of rows and columns: ");
+    scanf("%d %d", rows, cols);
+    
+    printf("Enter the matrix elements:\n");
+    for (int i = 0; i < *rows; i++) {
+        for (int j = 0; j < *cols; j++) {
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+}
 
-void create_sparse(int matrix[MAX][MAX], int rows, int cols, Tuple sparse[MAX * MAX], int *size) {
-    int count = 0;
+void printSparseMatrix(int matrix[MAX][MAX], int rows, int cols) {
+    int sparse[MAX * MAX][3]; // To store the sparse representation
+    int k = 0;
+    
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             if (matrix[i][j] != 0) {
-                sparse[count + 1].row = i;
-                sparse[count + 1].col = j;
-                sparse[count + 1].val = matrix[i][j];
-                count++;
+                sparse[k][0] = i;
+                sparse[k][1] = j;
+                sparse[k][2] = matrix[i][j];
+                k++;
             }
         }
     }
-    sparse[0].row = rows;
-    sparse[0].col = cols;
-    sparse[0].val = count;
-    *size = count + 1;
-}
-
-void print_matrix(int matrix[MAX][MAX], int rows, int cols) {
-    printf("\nOriginal Matrix:\n");
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            printf("%d ", matrix[i][j]);
-        }
-        printf("\n");
-    }
-}
-
-void print_sparse(Tuple sparse[MAX * MAX], int size) {
-    printf("\nSparse Matrix (Row, Column, Value):\n");
-    for (int i = 0; i < size; i++) {
-        printf("%d  %d  %d\n", sparse[i].row, sparse[i].col, sparse[i].val);
+    
+    printf("\nSparse Matrix Representation (Row, Column, Value):\n");
+    printf("%d %d %d\n", rows, cols, k); // First row contains matrix dimensions and non-zero count
+    for (int i = 0; i < k; i++) {
+        printf("%d %d %d\n", sparse[i][0], sparse[i][1], sparse[i][2]);
     }
 }
 
 int main() {
-    int rows, cols;
-    int matrix[MAX][MAX];
-    Tuple sparse[MAX * MAX];
+    int matrix[MAX][MAX], rows, cols;
     
-    printf("Enter the number of rows and columns: ");
-    scanf("%d %d", &rows, &cols);
-    
-    printf("\nEnter the matrix elements (use 0 for sparse positions):\n");
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            printf("Element [%d][%d]: ", i, j);
-            scanf("%d", &matrix[i][j]);
-        }
-    }
-    
-    print_matrix(matrix, rows, cols);
-    
-    int size;
-    create_sparse(matrix, rows, cols, sparse, &size);
-    print_sparse(sparse, size);
+    readMatrix(matrix, &rows, &cols);
+    printSparseMatrix(matrix, rows, cols);
     
     return 0;
 }
