@@ -14,8 +14,8 @@ void initStack(Stack *s) {
     s->top = -1;
 }
 
-void push(Stack *s, char c) {
-    s->items[++s->top] = c;
+void push(Stack *s, char value) {
+    s->items[++s->top] = value;
 }
 
 char pop(Stack *s) {
