@@ -6,33 +6,30 @@ typedef struct Node {
     struct Node *prev, *next;
 } Node;
 
-Node *head = NULL;
+Node *head = NULL, *tail = NULL;
 
 void insert_begin(int data) {
     Node *new_node = malloc(sizeof(Node));
-    if (!new_node) return;
     new_node->data = data;
     new_node->prev = NULL;
     new_node->next = head;
     if (head)
         head->prev = new_node;
+    else
+        tail = new_node;
     head = new_node;
 }
 
 void insert_end(int data) {
-    Node *new_node = malloc(sizeof(Node)), *temp = head;
-    if (!new_node) return;
+    Node *new_node = malloc(sizeof(Node));
     new_node->data = data;
     new_node->next = NULL;
-    if (!head) {
-        new_node->prev = NULL;
+    new_node->prev = tail;
+    if (tail)
+        tail->next = new_node;
+    else
         head = new_node;
-        return;
-    }
-    while (temp->next)
-        temp = temp->next;
-    temp->next = new_node;
-    new_node->prev = temp;
+    tail = new_node;
 }
 
 void insert_pos(int data, int pos) {
@@ -40,19 +37,19 @@ void insert_pos(int data, int pos) {
         insert_begin(data);
         return;
     }
-    Node *new_node = malloc(sizeof(Node)), *temp = head;
-    if (!new_node) return;
+    Node *temp = head;
     for (int i = 0; temp && i < pos - 1; i++)
         temp = temp->next;
-    if (!temp) {
-        free(new_node);
-        return;
-    }
+    if (!temp) return;
+
+    Node *new_node = malloc(sizeof(Node));
     new_node->data = data;
     new_node->next = temp->next;
     new_node->prev = temp;
     if (temp->next)
         temp->next->prev = new_node;
+    else
+        tail = new_node;
     temp->next = new_node;
 }
 
@@ -62,20 +59,19 @@ void delete_begin() {
     head = head->next;
     if (head)
         head->prev = NULL;
+    else
+        tail = NULL;
     free(temp);
 }
 
 void delete_end() {
-    if (!head) return;
-    if (!head->next) {
-        free(head);
+    if (!tail) return;
+    Node *temp = tail;
+    tail = tail->prev;
+    if (tail)
+        tail->next = NULL;
+    else
         head = NULL;
-        return;
-    }
-    Node *temp = head;
-    while (temp->next)
-        temp = temp->next;
-    temp->prev->next = NULL;
     free(temp);
 }
 
@@ -89,22 +85,33 @@ void delete_pos(int pos) {
     for (int i = 0; temp && i < pos; i++)
         temp = temp->next;
     if (!temp) return;
+
     if (temp->prev)
         temp->prev->next = temp->next;
     if (temp->next)
         temp->next->prev = temp->prev;
+    if (temp == head)
+        head = temp->next;
+    if (temp == tail)
+        tail = temp->prev;
     free(temp);
 }
 
-void print() {
+void print_forward() {
     for (Node *temp = head; temp; temp = temp->next)
-        printf("%d%s", temp->data, temp->next ? " <-> " : "\n");
+        printf("%d%s", temp->data, temp->next ? " -> " : "\n");
+}
+
+void print_backward() {
+    for (Node *temp = tail; temp; temp = temp->prev)
+        printf("%d%s", temp->data, temp->prev ? " <- " : "\n");
 }
 
 int main() {
     int choice, data, pos;
     while (1) {
-        printf("1. Insert at Beginning\n2. Insert at End\n3. Insert at Position\n4. Delete from Beginning\n5. Delete from End\n6. Delete from Position\n7. Print\n8. Exit\n");
+        printf("1. Insert at Beginning\n2. Insert at End\n3. Insert at Position\n4. Delete from Beginning\n5. Delete from End\n6. Delete from Position\n");
+        printf("7. Print Forward\n8. Print Backward\n9. Exit\n");
         scanf("%d", &choice);
         if (choice == 1) {
             scanf("%d", &data);
@@ -123,8 +130,10 @@ int main() {
             scanf("%d", &pos);
             delete_pos(pos);
         } else if (choice == 7) {
-            print();
+            print_forward();
         } else if (choice == 8) {
+            print_backward();
+        } else if (choice == 9) {
             break;
         } else {
             printf("Invalid input, try again.\n");
