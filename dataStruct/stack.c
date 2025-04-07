@@ -1,12 +1,12 @@
 #include <stdio.h>
 
-#define STACK_SIZE 100
+#define MAX 100
 
-int stack[STACK_SIZE];
+int stack[MAX];
 int top = -1;
 
 void push(int value) {
-    if (top >= STACK_SIZE - 1) {
+    if (top >= MAX - 1) {
         printf("Stack Overflow\n");
         return;
     }
