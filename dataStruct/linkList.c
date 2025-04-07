@@ -108,8 +108,10 @@ int main() {
             delete_pos(pos);
         } else if (choice == 7) {
             print();
-        } else {
+        } else if (choice == 8) {
             break;
+        } else {
+            printf("Invalid input, try again.\n");
         }
     }
     return 0;
