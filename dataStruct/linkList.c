@@ -88,15 +88,22 @@ void print() {
 int main() {
     int choice, data, pos;
     while (1) {
-        printf("1. Insert at Beginning\n2. Insert at End\n3. Insert at Position\n4. Delete from Beginning\n5. Delete from End\n6. Delete from Position\n7. Print\n8. Exit\n");
+        printf("\n1. Insert at Beginning\n2. Insert at End\n3. Insert at Position\n");
+        printf("4. Delete from Beginning\n5. Delete from End\n6. Delete from Position\n");
+        printf("7. Print\n8. Exit\n");
+        printf("Enter your choice: ");
         scanf("%d", &choice);
+
         if (choice == 1) {
+            printf("Enter data to insert at beginning: ");
             scanf("%d", &data);
             insert_begin(data);
         } else if (choice == 2) {
+            printf("Enter data to insert at end: ");
             scanf("%d", &data);
             insert_end(data);
         } else if (choice == 3) {
+            printf("Enter data and position: ");
             scanf("%d %d", &data, &pos);
             insert_pos(data, pos);
         } else if (choice == 4) {
@@ -104,6 +111,7 @@ int main() {
         } else if (choice == 5) {
             delete_end();
         } else if (choice == 6) {
+            printf("Enter position to delete: ");
             scanf("%d", &pos);
             delete_pos(pos);
         } else if (choice == 7) {
