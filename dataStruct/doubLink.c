@@ -122,6 +122,8 @@ int main() {
         } else if (choice == 6) {
             scanf("%d", &pos);
             delete_pos(pos);
+        } else if (choice == 7) {
+            print();
         } else {
             break;
         }
