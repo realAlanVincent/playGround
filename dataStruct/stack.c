@@ -26,7 +26,7 @@ void display() {
         printf("Stack is empty\n");
         return;
     }
-    for (int i = top; i >= 0; i--)
+    for (int i = 0; i <= top; i++)
         printf("%d\n", stack[i]);
 }
 
