@@ -11,24 +11,17 @@ void traverse(int arr[], int size) {
 }
 
 void insert(int arr[], int *size, int position, int value) {
-    if(*size >= MAX) return;
-    if(position < 0 || position > *size) return;
-
     for(int i = *size; i > position; i--) {
         arr[i] = arr[i - 1];
     }
-
     arr[position] = value;
     (*size)++;
 }
 
 void delete(int arr[], int *size, int position) {
-    if(position < 0 || position >= *size) return;
-
     for(int i = position; i < *size - 1; i++) {
         arr[i] = arr[i + 1];
     }
-
     (*size)--;
 }
 
