@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Project Specs: Minimalistic PHP Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        .nav-link.active {
+            background-color: #e9ecef;
+            color: #0d6efd;
+            font-weight: 600;
+        }
+        .file-link.active {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .file-details {
+            display: none;
+        }
+        .file-details.active {
+            display: block;
+        }
+        .code-block {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+    <!-- Chosen Palette: Soft Dev (Warm neutrals with muted blue accents) -->
+    <!-- Application Structure Plan: A tabbed single-page application. The main navigation switches between key sections of the specification (Overview, Tech, Database, Files, Setup). This structure was chosen to break down the dense technical document into logical, manageable chunks, allowing a developer to quickly access the specific information they need without extensive scrolling. The most interactive part is the 'File Architecture' section, which uses a master-detail pattern (file list -> file details) to make exploring the codebase intuitive. -->
+    <!-- Visualization & Content Choices: Report Info: Database Schema -> Goal: Organize/Display -> Presentation: Styled HTML tables and code blocks. Interaction: None. Justification: Tables are the semantic and clearest way to represent database structure. Report Info: File Functions -> Goal: Organize/Explore -> Presentation: Two-column interactive layout. Interaction: Click file name to show details. Justification: This master-detail view prevents overwhelming the user with a long list of text and allows for focused exploration of the application's logic. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-6xl">
+        
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Minimalistic PHP Blog</h1>
+            <p class="text-lg text-gray-600 mt-2">Interactive Project Specifications</p>
+        </header>
+
+        <nav class="flex flex-wrap justify-center bg-white rounded-lg shadow-sm p-2 mb-8 gap-2">
+            <a href="#overview" class="nav-link active text-sm sm:text-base px-4 py-2 rounded-md text-gray-700 hover:bg-gray-100">🚀 Overview</a>
+            <a href="#stack" class="nav-link text-sm sm:text-base px-4 py-2 rounded-md text-gray-700 hover:bg-gray-100">🛠️ Tech Stack</a>
+            <a href="#schema" class="nav-link text-sm sm:text-base px-4 py-2 rounded-md text-gray-700 hover:bg-gray-100">🗃️ Database Schema</a>
+            <a href="#files" class="nav-link text-sm sm:text-base px-4 py-2 rounded-md text-gray-700 hover:bg-gray-100">📂 File Architecture</a>
+            <a href="#setup" class="nav-link text-sm sm:text-base px-4 py-2 rounded-md text-gray-700 hover:bg-gray-100">⚙️ Setup Guide</a>
+        </nav>
+
+        <main class="bg-white p-6 sm:p-8 rounded-lg shadow">
+            
+            <section id="overview" class="content-section active">
+                <h2 class="text-2xl font-bold mb-4 text-gray-800 border-b pb-2">Project Overview</h2>
+                <p class="mb-6 text-gray-700">This document outlines the technical specifications for a simple, beginner-friendly blog platform built with PHP and MySQL. The project is a lightweight blog application designed to provide basic user authentication and full CRUD (Create, Read, Update, Delete) functionality for blog posts. The primary goal is to offer a minimalistic and educational codebase for developers new to PHP and MySQL.</p>
+                
+                <h3 class="text-xl font-semibold mb-3 text-gray-800">Core Features</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-blue-800 mb-2">👤 User Authentication</h4>
+                        <ul class="list-disc list-inside text-blue-700 space-y-1">
+                            <li>User registration with a unique username and a securely hashed password.</li>
+                            <li>User login and logout functionality using PHP sessions.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-green-800 mb-2">✍️ Post Management</h4>
+                        <ul class="list-disc list-inside text-green-700 space-y-1">
+                            <li>Authenticated users can create new blog posts with a title and content.</li>
+                            <li>All posts are publicly visible on the main page.</li>
+                            <li>Users can only edit or delete the posts they have authored.</li>
+                            <li>Posts are displayed in reverse chronological order.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="stack" class="content-section">
+                <h2 class="text-2xl font-bold mb-4 text-gray-800 border-b pb-2">Technology Stack</h2>
+                <p class="mb-6 text-gray-700">This project relies on a classic, robust stack ideal for web development education and deployment on most hosting environments.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <h3 class="font-bold text-lg">Backend</h3>
+                        <p class="text-gray-600">PHP 7.4+</p>
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <h3 class="font-bold text-lg">Database</h3>
+                        <p class="text-gray-600">MySQL / MariaDB</p>
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <h3 class="font-bold text-lg">Web Server</h3>
+                        <p class="text-gray-600">Apache</p>
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <h3 class="font-bold text-lg">Frontend</h3>
+                        <p class="text-gray-600">HTML5 & CSS3</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="schema" class="content-section">
+                <h2 class="text-2xl font-bold mb-4 text-gray-800 border-b pb-2">Database Schema</h2>
+                <p class="mb-6 text-gray-700">The application uses a MySQL database named `blog` with two tables: `users` for authentication and `posts` for content. The structure is designed to be relational and efficient.</p>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Table: `users`</h3>
+                    <p class="text-gray-600 mb-4">Stores user credentials for login and registration.</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="p-3 font-semibold border">Column</th>
+                                    <th class="p-3 font-semibold border">Type</th>
+                                    <th class="p-3 font-semibold border">Attributes</th>
+                                    <th class="p-3 font-semibold border">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="p-3 border">id</td>
+                                    <td class="p-3 border">INT</td>
+                                    <td class="p-3 border">PRIMARY KEY, AUTO_INCREMENT</td>
+                                    <td class="p-3 border">Unique identifier for each user.</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="p-3 border">username</td>
+                                    <td class="p-3 border">VARCHAR(50)</td>
+                                    <td class="p-3 border">NOT NULL, UNIQUE</td>
+                                    <td class="p-3 border">The user's chosen username.</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="p-3 border">password</td>
+                                    <td class="p-3 border">VARCHAR(255)</td>
+                                    <td class="p-3 border">NOT NULL</td>
+                                    <td class="p-3 border">The user's securely hashed password.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h4 class="font-semibold mt-4 mb-2">SQL Definition:</h4>
+                    <pre class="code-block"><code>CREATE TABLE `users` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `username` VARCHAR(50) NOT NULL UNIQUE,
+  `password` VARCHAR(255) NOT NULL
+);</code></pre>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Table: `posts`</h3>
+                    <p class="text-gray-600 mb-4">Stores blog post content and links it to an author in the `users` table.</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="p-3 font-semibold border">Column</th>
+                                    <th class="p-3 font-semibold border">Type</th>
+                                    <th class="p-3 font-semibold border">Attributes</th>
+                                    <th class="p-3 font-semibold border">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="hover:bg-gray-50"><td class="p-3 border">id</td><td class="p-3 border">INT</td><td class="p-3 border">PRIMARY KEY, AUTO_INCREMENT</td><td class="p-3 border">Unique identifier for each post.</td></tr>
+                                <tr class="hover:bg-gray-50"><td class="p-3 border">user_id</td><td class="p-3 border">INT</td><td class="p-3 border">NOT NULL, FOREIGN KEY</td><td class="p-3 border">References `users.id`. Links post to author.</td></tr>
+                                <tr class="hover:bg-gray-50"><td class="p-3 border">title</td><td class="p-3 border">VARCHAR(255)</td><td class="p-3 border">NOT NULL</td><td class="p-3 border">The title of the blog post.</td></tr>
+                                <tr class="hover:bg-gray-50"><td class="p-3 border">content</td><td class="p-3 border">TEXT</td><td class="p-3 border">NOT NULL</td><td class="p-3 border">The main body content of the post.</td></tr>
+                                <tr class="hover:bg-gray-50"><td class="p-3 border">created_at</td><td class="p-3 border">TIMESTAMP</td><td class="p-3 border">DEFAULT CURRENT_TIMESTAMP</td><td class="p-3 border">The date and time the post was created.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h4 class="font-semibold mt-4 mb-2">SQL Definition:</h4>
+                    <pre class="code-block"><code>CREATE TABLE `posts` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `user_id` INT NOT NULL,
+  `title` VARCHAR(255) NOT NULL,
+  `content` TEXT NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
+);</code></pre>
+                </div>
+            </section>
+
+            <section id="files" class="content-section">
+                <h2 class="text-2xl font-bold mb-4 text-gray-800 border-b pb-2">File Architecture</h2>
+                <p class="mb-6 text-gray-700">The project is organized into a single root directory for simplicity. Click on a file name below to see its purpose and logic.</p>
+                <div class="md:grid md:grid-cols-3 md:gap-8">
+                    <div class="md:col-span-1 mb-6 md:mb-0">
+                        <h3 class="font-semibold mb-3 text-lg">Project Files</h3>
+                        <div class="space-y-1">
+                            <a href="#" class="file-link active block p-3 rounded-md hover:bg-gray-100" data-target="file-db">db.php</a>
+                            <a href="#" class="file-link block p-3 rounded-md hover:bg-gray-100" data-target="file-index">index.php</a>
+                            <a href="#" class="file-link block p-3 rounded-md hover:bg-gray-100" data-target="file-register">register.php</a>
+                            <a href="#" class="file-link block p-3 rounded-md hover:bg-gray-100" data-target="file-login">login.php</a>
+                            <a href="#" class="file-link block p-3 rounded-md hover:bg-gray-100" data-target="file-logout">logout.php</a>
+                            <a href="#" class="file-link block p-3 rounded-md hover:bg-gray-100" data-target="file-create">create_post.php</a>
+                            <a href="#" class="file-link block p-3 rounded-md hover:bg-gray-100" data-target="file-edit">edit_post.php</a>
+                            <a href="#" class="file-link block p-3 rounded-md hover:bg-gray-100" data-target="file-delete">delete_post.php</a>
+                            <a href="#" class="file-link block p-3 rounded-md hover:bg-gray-100" data-target="file-style">style.css</a>
+                        </div>
+                    </div>
+                    <div class="md:col-span-2 bg-gray-50 p-4 rounded-lg">
+                        <div id="file-db" class="file-details active">
+                            <h3 class="font-bold text-lg mb-2">db.php</h3>
+                            <p class="font-semibold text-gray-700">Purpose:</p>
+                            <p class="mb-3">Handles the database connection and session management.</p>
+                            <p class="font-semibold text-gray-700">Logic:</p>
+                            <p>Starts a PHP session with `session_start()`. Connects to the MySQL database using `mysqli`. This file is included at the beginning of all other PHP files that require database access or session information.</p>
+                        </div>
+                        <div id="file-index" class="file-details">
+                            <h3 class="font-bold text-lg mb-2">index.php</h3>
+                            <p class="font-semibold text-gray-700">Purpose:</p>
+                            <p class="mb-3">The main homepage. It displays all blog posts.</p>
+                            <p class="font-semibold text-gray-700">Logic:</p>
+                            <p>Fetches all posts from the `posts` table, joining with the `users` table to display the author's username. It displays posts in descending order of creation. If a user is logged in, it shows their username and links to create a post and log out. It also displays "Edit" and "Delete" links on posts belonging to the logged-in user.</p>
+                        </div>
+                         <div id="file-register" class="file-details">
+                            <h3 class="font-bold text-lg mb-2">register.php</h3>
+                            <p class="font-semibold text-gray-700">Purpose:</p>
+                            <p class="mb-3">Handles new user registration.</p>
+                            <p class="font-semibold text-gray-700">Logic:</p>
+                            <p>Displays a registration form. Upon submission, it hashes the password using `password_hash()` and inserts the new user record into the `users` table.</p>
+                        </div>
+                        <div id="file-login" class="file-details">
+                            <h3 class="font-bold text-lg mb-2">login.php</h3>
+                            <p class="font-semibold text-gray-700">Purpose:</p>
+                            <p class="mb-3">Authenticates existing users.</p>
+                            <p class="font-semibold text-gray-700">Logic:</p>
+                            <p>Displays a login form. It verifies the submitted password against the stored hash using `password_verify()`. If successful, it stores user info in the `$_SESSION` and redirects to `index.php`.</p>
+                        </div>
+                        <div id="file-logout" class="file-details">
+                            <h3 class="font-bold text-lg mb-2">logout.php</h3>
+                            <p class="font-semibold text-gray-700">Purpose:</p>
+                            <p class="mb-3">Ends a user's session.</p>
+                            <p class="font-semibold text-gray-700">Logic:</p>
+                            <p>Destroys the current session data using `session_destroy()` and redirects the user to `index.php`.</p>
+                        </div>
+                         <div id="file-create" class="file-details">
+                            <h3 class="font-bold text-lg mb-2">create_post.php</h3>
+                            <p class="font-semibold text-gray-700">Purpose:</p>
+                            <p class="mb-3">Provides a form to create a new blog post.</p>
+                            <p class="font-semibold text-gray-700">Logic:</p>
+                            <p>This page is protected. On submission, it inserts a new record into the `posts` table, linking it to the logged-in user's ID from the session.</p>
+                        </div>
+                        <div id="file-edit" class="file-details">
+                            <h3 class="font-bold text-lg mb-2">edit_post.php</h3>
+                            <p class="font-semibold text-gray-700">Purpose:</p>
+                            <p class="mb-3">Provides a form to edit an existing post.</p>
+                            <p class="font-semibold text-gray-700">Logic:</p>
+                            <p>This page is protected. It verifies that the logged-in user is the author. If authorized, it displays a form pre-filled with the post's current data. On submission, it updates the record in the `posts` table.</p>
+                        </div>
+                        <div id="file-delete" class="file-details">
+                            <h3 class="font-bold text-lg mb-2">delete_post.php</h3>
+                            <p class="font-semibold text-gray-700">Purpose:</p>
+                            <p class="mb-3">A script to delete a post.</p>
+                            <p class="font-semibold text-gray-700">Logic:</p>
+                            <p>A protected script that verifies the logged-in user is the author before executing a `DELETE` SQL statement on the `posts` table.</p>
+                        </div>
+                        <div id="file-style" class="file-details">
+                            <h3 class="font-bold text-lg mb-2">style.css</h3>
+                            <p class="font-semibold text-gray-700">Purpose:</p>
+                            <p class="mb-3">Provides simple, clean styling for all pages.</p>
+                            <p class="font-semibold text-gray-700">Logic:</p>
+                            <p>Uses basic CSS selectors to style the layout, forms, posts, and links for a readable and user-friendly interface.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="setup" class="content-section">
+                <h2 class="text-2xl font-bold mb-4 text-gray-800 border-b pb-2">Setup and Installation Guide</h2>
+                <p class="mb-6 text-gray-700">Follow these steps to get the project running on your local machine.</p>
+                <ol class="list-decimal list-inside space-y-4">
+                    <li class="pl-2">
+                        <span class="font-semibold">Environment:</span> Set up a local server environment (XAMPP, WAMP, etc.) with Apache, MySQL, and PHP.
+                    </li>
+                    <li class="pl-2">
+                        <span class="font-semibold">Database:</span> Use a tool like phpMyAdmin to create a new database named `blog`.
+                    </li>
+                    <li class="pl-2">
+                        <span class="font-semibold">Tables:</span> Execute the SQL statements from the <a href="#schema" class="text-blue-600 hover:underline internal-link">Database Schema</a> section to create the `users` and `posts` tables.
+                    </li>
+                    <li class="pl-2">
+                        <span class="font-semibold">Files:</span> Place all the project files into a folder (e.g., `my_blog`) inside the web server's root directory (e.g., `htdocs` for XAMPP).
+                    </li>
+                    <li class="pl-2">
+                        <span class="font-semibold">Configuration:</span> Open `db.php` and ensure the database credentials (`$db_host`, `$db_user`, `$db_pass`, `$db_name`) match your local setup.
+                    </li>
+                    <li class="pl-2">
+                        <span class="font-semibold">Run:</span> Access the project in your web browser by navigating to `http://localhost/my_blog`.
+                    </li>
+                </ol>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const internalLinks = document.querySelectorAll('.internal-link');
+            const contentSections = document.querySelectorAll('.content-section');
+
+            const fileLinks = document.querySelectorAll('.file-link');
+            const fileDetails = document.querySelectorAll('.file-details');
+
+            function switchTab(targetId) {
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === targetId);
+                });
+                contentSections.forEach(section => {
+                    section.classList.toggle('active', '#' + section.id === targetId);
+                });
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    switchTab(targetId);
+                    window.location.hash = targetId;
+                });
+            });
+            
+            internalLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    switchTab(targetId);
+                    window.location.hash = targetId;
+                });
+            });
+
+            fileLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.dataset.target;
+
+                    fileLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+
+                    fileDetails.forEach(detail => {
+                        detail.classList.toggle('active', detail.id === targetId);
+                    });
+                });
+            });
+            
+            if (window.location.hash) {
+                const targetId = window.location.hash;
+                const targetLink = document.querySelector(`.nav-link[href="${targetId}"]`);
+                if(targetLink) {
+                    switchTab(targetId);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
