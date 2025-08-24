@@ -1,0 +1,81 @@
+/* Basic Reset & Body Style */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Main Container */
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Header Section */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+.header h1 {
+    margin: 0;
+    color: #0056b3;
+}
+.auth-links a { margin-left: 15px; }
+
+/* Forms */
+input[type="text"], input[type="password"], textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+textarea { resize: vertical; }
+
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+button:hover { background: #0056b3; }
+
+/* Links */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+/* Messages (for login/register feedback) */
+.message { color: #d9534f; }
+
+/* Post Styling */
+.post {
+    background: #f9f9f9;
+    border: 1px solid #e9e9e9;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+.post h2 { margin-top: 0; }
+.post small { color: #777; }
+.post-actions { margin-top: 15px; }
+.post-actions a { margin-right: 10px; }
+.post-actions a.delete { color: #d9534f; }
