@@ -122,4 +122,4 @@ my\_blog/
 3. **Tables**: Execute the SQL statements from the **Database Schema** section to create the users and posts tables.  
 4. **Files**: Place all the project files into a folder (e.g., my\_blog) inside the web server's root directory (e.g., htdocs for XAMPP).  
 5. **Configuration**: Open db.php and ensure the database credentials ($db\_host, $db\_user, $db\_pass, $db\_name) match your local setup.  
-6. **Run**: Access the project in your web browser by navigating to http://localhost/my\_blog.
+6. **Run**: Access the project in your web browser by navigating to http://localhost/my_blog.
